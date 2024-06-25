@@ -1,6 +1,6 @@
-# ner-datasets
+# NER Datasets
 
-[Scoping Review](https://github.com/philipp-kohl/scoping-review-active-learning-er).
+Data collection from [Scoping Review](https://github.com/philipp-kohl/scoping-review-active-learning-er).
 
 For several corpora you have to request or investigate for your use case  and download the data by yourself. 
 You can use our script to convert the data.
