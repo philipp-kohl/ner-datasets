@@ -1,9 +1,8 @@
 from typing import Optional
 from datasets import load_dataset
+from main import save_to_jsonl
 
 import argparse
-from huggingface_corpora_functions import load_corpus_from_huggingface, save_to_jsonl
-
 
 def load_corpus_from_huggingface(name: str, config: Optional[str] = None):
     """ Loads Corpus from huggingface datasets library. List of available corpora: list_datasets()
@@ -16,9 +15,9 @@ def load_corpus_from_huggingface(name: str, config: Optional[str] = None):
     """
 
     if config:
-        corpus = load_dataset(name, config)
+        corpus = load_dataset(name, config, trust_remote_code=True)
     else:
-        corpus = load_dataset(name)
+        corpus = load_dataset(name, trust_remote_code=True)
 
     train = corpus["train"]
     dev = corpus["validation"]
