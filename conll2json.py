@@ -49,7 +49,6 @@ class CONLL2JSON:
             else:
                 sentence = " ".join([word.split(sep)[0] for word in words])
                 words = [word.split(sep) for word in words]
-
                 df_words = pd.DataFrame(data=words, columns=['word', 'ner'])
                 
                 doc = nlp(sentence)
