@@ -43,7 +43,7 @@ List of datasets with licences information:
     - LDC User Agreement for Non-Members: https://catalog.ldc.upenn.edu/LDC2013T19
 - JNLPBA [investigate & download]
     - Original link broken
-    - No know license
+    - No known license
     - https://huggingface.co/datasets/jnlpba
 - Herodotos Project [included]
     - Cite paper: https://github.com/Herodotos-Project/Herodotos-Project-Latin-NER-Tagger-Annotation
@@ -60,7 +60,7 @@ List of datasets with licences information:
 - CORA-Headers [investigate & download]
   - No known license, root data was publicly available, but domain was sold
   - https://people.cs.umass.edu/~mccallum/data.html
-- CORA-References
+- CORA-References [investigate & download]
   - No known license, root data was publicly available, but domain was sold
   - https://people.cs.umass.edu/~mccallum/data.html
 - Sig+Reply [investigate & download]
