@@ -1,5 +1,4 @@
 import pandas as pd
-import json
 import spacy
 from spacy.tokens import Doc
 from spacy.training import biluo_tags_to_spans, iob_to_biluo
