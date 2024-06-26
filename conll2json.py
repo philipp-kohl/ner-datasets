@@ -53,13 +53,17 @@ class CONLL2JSON:
                 
                 doc = nlp(sentence)
                 tokens = [token.text for token in doc]
-                spaces = len(words) * [True]
-                doc = Doc(nlp.vocab, words=df_words['word'], spaces=spaces)
 
+                words_with_empty = df_words["word"]
+                words = []
+                for word in words_with_empty:
+                    if word != "":
+                        words.append(word)
+                spaces = len(words) * [True]
+                doc = Doc(nlp.vocab, words=words, spaces=spaces)
                 tmp = biluo_tags_to_spans(doc, iob_to_biluo(df_words['ner']))
 
                 char_spans = [(span.start_char, span.end_char, span.label_) for span in tmp]
-
                 list_dicts.append({'tokens': tokens, 'text': sentence, 'labels': char_spans})
 
                 words = []
