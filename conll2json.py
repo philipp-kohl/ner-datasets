@@ -3,6 +3,8 @@ import json
 import spacy
 from spacy.tokens import Doc
 from spacy.training import biluo_tags_to_spans, iob_to_biluo
+from sklearn.model_selection import train_test_split
+import srsly
 
 train_size = 0.7
 dev_size = 0.15
@@ -73,7 +75,7 @@ class CONLL2JSON:
         :return:
         """
 
-    def parse(self, input_file: str, output_file: str, sep: str, fmt) -> None:
+    def parse(self, input_file: str, output_file: str, sep: str, fmt, with_split = False) -> None:
         if sep not in self._sep_list:
             raise RuntimeError(f'Separator should be in "{self._sep_list}", provided separator was "{sep}"')
 
@@ -82,30 +84,16 @@ class CONLL2JSON:
 
         content = self._load_text(input_file)
         list_dicts = self._process_text(content, sep)
-        if fmt == 'json':
-                data = json.dumps(list_dicts)
-        else:
-            list_dicts = [json.dumps(l) for l in list_dicts]
-            data = '\n'.join(list_dicts)
 
-        with open(output_file, 'w') as json_file:
-            json_file.write(data)
-        """
-        With train test dev split:
-        train, rest = train_test_split(list_dicts, train_size=train_size, test_size=1-train_size)
-        test, dev = train_test_split(rest, train_size=test_size/(test_size+dev_size), test_size=dev_size/(test_size+dev_size))
-        sets = [{"train": train}, {"test": test},{"dev": dev}]
+        if not with_split:
+            srsly.write_jsonl(output_file,list_dicts)
 
-        for set in sets:
-            key = list(set.keys())[0]
-            if fmt == 'json':
-                data = json.dumps(set[key])
-            else:
-                list_dicts = [json.dumps(l) for l in set[key]]
-                data = '\n'.join(list_dicts)
-
-            with open(output_file+"_"+key+".jsonl", 'w') as json_file:
-                json_file.write(data)"""
+        else: # With train test dev split
+            train, rest = train_test_split(list_dicts, train_size=train_size, test_size=1-train_size)
+            test, dev = train_test_split(rest, train_size=test_size/(test_size+dev_size), test_size=dev_size/(test_size+dev_size))
+            sets = {"train": train, "test": test, "dev": dev}
+            for name in sets:
+                srsly.write_jsonl(output_file+name+".jsonl", sets[name])
  
 def process_conll_format_to_jsonl(input_path: str, output_path: str):
     converter = CONLL2JSON()
