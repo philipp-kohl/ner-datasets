@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "ner-datasets"
+version = "0.1.0"
+description = ""
+authors = ["Yokiball <yoka.kraemer@gmx.de>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+spacy = "^3.7.5"
+srsly = "^2.4.8"
+scikit-learn = "^1.5.0"
+pandas = "^2.2.2"
+bs4 = "^0.0.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

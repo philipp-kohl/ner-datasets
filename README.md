@@ -2,9 +2,6 @@
 
 Data collection from [Scoping Review](https://github.com/philipp-kohl/scoping-review-active-learning-er).
 
-You have to request or investigate several corpora for your use case  and download the data by yourself. Please add downloaded data to the according directory in `raw_data`.
-You can use our script to convert the data: `python -m raw_data.<corpus>.process_data`
-
 ## List of datasets with license information:
 
 - CoNLL 2003 English NER [register & download]:
@@ -76,3 +73,16 @@ You can use our script to convert the data: `python -m raw_data.<corpus>.process
 - CoNLL 2000 English [investigate & download]
   - Chunking task, no ER, but listed for other researchers
   - https://huggingface.co/datasets/eriktks/conll2000
+
+
+## Getting started
+
+Prerequisite:
+- [git](https://git-scm.com/)
+- [poetry](https://python-poetry.org/docs/main/#installing-with-pipx)
+
+Run `poetry install` to install all packages needed for processing data in this repository.
+
+You have to request or investigate several corpora for your use case  and download the data by yourself. Please add downloaded data to the according directory of the dataset in `raw_data`.
+
+You can use our script to convert the data: `python -m raw_data.<corpus>.process_data`. Make sure that a directory for your corpus exists in `processed_data`.
