@@ -4,7 +4,7 @@ from main import save_to_jsonl
 
 import argparse
 
-def load_corpus_from_huggingface(name: str, config: Optional[str] = None):
+def load_corpus_from_huggingface(name: str, config: Optional[str] = None, test_data_available = True):
     """ Loads Corpus from huggingface datasets library. List of available corpora: list_datasets()
     Args:
         - name (str): Name of the dataset
@@ -21,10 +21,11 @@ def load_corpus_from_huggingface(name: str, config: Optional[str] = None):
 
     train = corpus["train"]
     dev = corpus["validation"]
-    test = corpus["test"]
-
-    return (train, dev, test)
-
+    if test_data_available:
+        test = corpus["test"]
+        return (train, dev, test)
+    else:
+        return (train,dev)
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--name', help='Name of the corpus on huggingface')

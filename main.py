@@ -12,7 +12,7 @@ train_size = 0.7
 dev_size = 0.15
 test_size = 0.15
 
-def process_and_split_local_corpus(dataset, output_name):
+def process_and_split_local_corpus(dataset, output_name, sep = "\t", split = True):
     result = []
 
     raw_text = dataset.read().strip()
@@ -22,9 +22,12 @@ def process_and_split_local_corpus(dataset, output_name):
         tokens = []
         tags = []
         for line in doc.split('\n'):
-            token, tag = line.split('\t')
-            tokens.append(token)
-            tags.append(tag)
+            if line.startswith("###"):
+                continue
+            elif line.strip():
+                token, tag = line.split(sep)
+                tokens.append(token)
+                tags.append(tag)
         text = " ".join(tokens)
 
         labels: List[(int,int,str)] = []
@@ -42,14 +45,18 @@ def process_and_split_local_corpus(dataset, output_name):
             "text": text,
             "labels": labels,
         }
-        result.append(datapoint)
+        if len(tokens)>0:
+            result.append(datapoint)
 
-    train, rest = train_test_split(result, train_size=train_size, test_size=1-train_size)
-    test, dev = train_test_split(rest, train_size=test_size/(test_size+dev_size), test_size=dev_size/(test_size+dev_size))
+    if split:
+        train, rest = train_test_split(result, train_size=train_size, test_size=1-train_size)
+        test, dev = train_test_split(rest, train_size=test_size/(test_size+dev_size), test_size=dev_size/(test_size+dev_size))
 
-    srsly.write_jsonl(output_name+"train.jsonl", train)
-    srsly.write_jsonl(output_name+"test.jsonl", test)
-    srsly.write_jsonl(output_name+"dev.jsonl", dev)
+        srsly.write_jsonl(output_name+"train.jsonl", train)
+        srsly.write_jsonl(output_name+"test.jsonl", test)
+        srsly.write_jsonl(output_name+"dev.jsonl", dev)
+    else:
+        srsly.write_jsonl(output_name, result)
 
 
 def save_to_jsonl(dataset, output_name):
@@ -83,16 +90,15 @@ def save_to_jsonl(dataset, output_name):
 
     srsly.write_jsonl(output_name, result)
 
-def read_files_and_split():
+def read_files_and_split(dataset_paths: List[str], output_dir: str):
     result = []
-    jsonObj = pd.read_json(path_or_buf='your_path', lines=True)
-    result.extend(jsonObj.to_dict('records'))
-    jsonObj = pd.read_json(path_or_buf='your_path', lines=True)
-    result.extend(jsonObj.to_dict('records'))
+    for path in dataset_paths:
+        jsonObj = pd.read_json(path_or_buf=path, lines=True)
+        result.extend(jsonObj.to_dict('records'))
     
     train, rest = train_test_split(result, train_size=0.7, test_size=0.3)
     test, dev = train_test_split(rest, train_size=0.5, test_size=0.5)
 
-    srsly.write_jsonl("split_train.jsonl", train)
-    srsly.write_jsonl("split_test.jsonl", test)
-    srsly.write_jsonl("split_dev.jsonl", dev)
+    srsly.write_jsonl(output_dir+"train.jsonl", train)
+    srsly.write_jsonl(output_dir+"test.jsonl", test)
+    srsly.write_jsonl(output_dir+"dev.jsonl", dev)
