@@ -56,6 +56,7 @@ You can use our script to convert the data: `python -m raw_data.<corpus>.process
 - AURC-8 (also referred to as ARG) [included]
     - Cite paper: https://github.com/trtm/AURC
 - GeneReg Corpus (MedLine abstracts) [included]
+    - Creative Commons Attribution-Noncommercial 3.0
     - 'The corpus and annotation guidelines are freely available for academic purposes at http://www.julielab.de' cited
       from paper (http://www.lrec-conf.org/proceedings/lrec2010/pdf/407_Paper.pdf)
 - CORA-Headers [investigate & download]
