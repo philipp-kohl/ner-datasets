@@ -2,9 +2,10 @@
 
 Data collection from [Scoping Review](https://github.com/philipp-kohl/scoping-review-active-learning-er).
 
-You have to request or investigate several corpora for your use case  and download the data by yourself. 
-You can use our script to convert the data.
-List of datasets with license information:
+You have to request or investigate several corpora for your use case  and download the data by yourself. Please add downloaded data to the according directory in `raw_data`.
+You can use our script to convert the data: `python -m raw_data.<corpus>.process_data`
+
+## List of datasets with license information:
 
 - CoNLL 2003 English NER [register & download]:
     - Download it via huggingface and register for a license.
