@@ -47,9 +47,9 @@ def process_and_split_local_corpus(dataset, output_name):
     train, rest = train_test_split(result, train_size=train_size, test_size=1-train_size)
     test, dev = train_test_split(rest, train_size=test_size/(test_size+dev_size), test_size=dev_size/(test_size+dev_size))
 
-    srsly.write_jsonl(output_name+"_train.jsonl", train)
-    srsly.write_jsonl(output_name+"_test.jsonl", test)
-    srsly.write_jsonl(output_name+"_dev.jsonl", dev)
+    srsly.write_jsonl(output_name+"train.jsonl", train)
+    srsly.write_jsonl(output_name+"test.jsonl", test)
+    srsly.write_jsonl(output_name+"dev.jsonl", dev)
 
 
 def save_to_jsonl(dataset, output_name):
